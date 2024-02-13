@@ -35,23 +35,24 @@ public class CartMenuPage {
     By okButtonPopUpConfirmation = By.xpath("//button[normalize-space()='OK']");
 
 
-    By priceOfItems (int index){
-        return By.xpath("(//tr[@class='success']//child::*[3])["+index+"]");}
-
-    By deleteSpecificItemCartButton(String toDeleteItem){
-        return By.xpath("//tr[@class='success'] //td[normalize-space()='"+toDeleteItem+"'] //following-sibling:: td //a[contains (@onclick, 'deleteItem') and normalize-space()='Delete']");
+    By priceOfItems(int index) {
+        return By.xpath("(//tr[@class='success']//child::*[3])[" + index + "]");
     }
 
-    By cartItemName(String itemCartName){
-        return By.xpath("//tr[@class='success'] //child:: td[normalize-space()='"+itemCartName+"']");
+    By deleteSpecificItemCartButton(String toDeleteItem) {
+        return By.xpath("//tr[@class='success'] //td[normalize-space()='" + toDeleteItem + "'] //following-sibling:: td //a[contains (@onclick, 'deleteItem') and normalize-space()='Delete']");
+    }
+
+    By cartItemName(String itemCartName) {
+        return By.xpath("//tr[@class='success'] //child:: td[normalize-space()='" + itemCartName + "']");
     }
 
 
-    public void userClicksAddToCartButton(){
+    public void userClicksAddToCartButton() {
         driver.findElement(addToCartButton).click();
     }
 
-    public void verifyTheListOfItemOnCartMenu(String expectedItemName){
+    public void verifyTheListOfItemOnCartMenu(String expectedItemName) {
         String[] expectedItemsArray = expectedItemName.split(", ");
 
         for (String item : expectedItemsArray) {
@@ -61,15 +62,15 @@ public class CartMenuPage {
 
     }
 
-    public void userClicksTheDeleteButtonFor(String itemToBeDeleted){
+    public void userClicksTheDeleteButtonFor(String itemToBeDeleted) {
         driver.findElement(deleteSpecificItemCartButton(itemToBeDeleted)).click();
     }
 
-    public void verifyTheListOfItemOnCartMenuIsEmpty(){
+    public void verifyTheListOfItemOnCartMenuIsEmpty() {
         assertFalse(driver.findElement(totalPrice).isDisplayed());
     }
 
-    public void verifyTheTotalPriceOfTheItems(){
+    public void verifyTheTotalPriceOfTheItems() {
 
         int parsingStoI;
         int totalPriceTable = 0;
@@ -82,18 +83,18 @@ public class CartMenuPage {
         //System.out.println("Length of table price array is: "+elementsCount);
 
 
-        for(int intIndex = 0; intIndex < tablePriceArray.length ; intIndex++){
+        for (int intIndex = 0; intIndex < tablePriceArray.length; intIndex++) {
 
-            if(driver.findElement(priceOfItems(intIndex+1)).isDisplayed()){
-                itemPrices = driver.findElement(priceOfItems(intIndex+1)).getText();
+            if (driver.findElement(priceOfItems(intIndex + 1)).isDisplayed()) {
+                itemPrices = driver.findElement(priceOfItems(intIndex + 1)).getText();
                 //System.out.println("Here are the: "+itemPrices);
 
                 parsingStoI = Integer.parseInt(itemPrices);
 
-                tablePriceArray[intIndex]= parsingStoI;
+                tablePriceArray[intIndex] = parsingStoI;
 
                 totalPriceTable += parsingStoI;
-            }else{
+            } else {
                 break;
             }
 
@@ -101,102 +102,96 @@ public class CartMenuPage {
 
         //System.out.println("Here's the total price obtained: " + totalPriceTable);
 
-        String totalPriceTableString = Integer.toString(totalPriceTable);;
+        String totalPriceTableString = Integer.toString(totalPriceTable);
+        ;
         totalPriceRight = driver.findElement(totalPrice).getText();
         assertEquals(totalPriceTableString, totalPriceRight);
     }
 
-    public void userClicksPlaceOrderButton(){
+    public void userClicksPlaceOrderButton() {
         driver.findElement(placeOrderButton).click();
     }
 
-    public void verifyThatOrderFormPopUpWindowWillBeDisplayed(){
+    public void verifyThatOrderFormPopUpWindowWillBeDisplayed() {
         driver.findElement(orderFormPopUpWindow).isDisplayed();
     }
 
-    public void verifyTheTotalPriceOnTheOrderForm(){
+    public void verifyTheTotalPriceOnTheOrderForm() {
         String substringTotalPrice = driver.findElement(totalPriceOnOrderForm).getText().substring(7);
         assertEquals(substringTotalPrice, totalPriceRight);
     }
 
-    public void userFillsInTheNameForOrderForm(String nameOrderForm){
+    public void userFillsInTheNameForOrderForm(String nameOrderForm) {
         driver.findElement(nameFieldOrderForm).sendKeys(nameOrderForm);
         globalNameOrderForm = nameOrderForm;
     }
 
-    public void userFillsInTheCountryForOrderForm(String countryOrderForm){
+    public void userFillsInTheCountryForOrderForm(String countryOrderForm) {
         driver.findElement(countryFieldOrderForm).sendKeys(countryOrderForm);
     }
 
-    public void userFillsInTheCityForOrderForm(String cityOrderForm){
+    public void userFillsInTheCityForOrderForm(String cityOrderForm) {
         driver.findElement(cityFieldOrderForm).sendKeys(cityOrderForm);
     }
 
-    public void userFillsInTheCreditCardForOrderForm(String creditCardOrderForm){
+    public void userFillsInTheCreditCardForOrderForm(String creditCardOrderForm) {
         driver.findElement(creditCardFieldOrderForm).sendKeys(creditCardOrderForm);
         globalCreditCardOrderForm = creditCardOrderForm;
     }
 
-    public void userFillsInTheMonthForOrderForm(String monthOrderForm){
+    public void userFillsInTheMonthForOrderForm(String monthOrderForm) {
         driver.findElement(monthFieldOrderForm).sendKeys(monthOrderForm);
     }
 
-    public void userFillsInTheYearForOrderForm(String yearOrderForm){
+    public void userFillsInTheYearForOrderForm(String yearOrderForm) {
         driver.findElement(yearFieldOrderForm).sendKeys(yearOrderForm);
     }
 
-    public void userClicksPurchaseButton(){
+    public void userClicksPurchaseButton() {
         driver.findElement(purchaseButton).click();
     }
 
-    public void userSeesThePopUpConfirmationOfOrder(){
+    public void userSeesThePopUpConfirmationOfOrder() {
         driver.findElement(orderPopUpConfirmation).isDisplayed();
         //System.out.println("ini adalah isi textnya: " + driver.findElement(orderPopUpConfirmation).getText());
 
-        assertTrue( driver.findElement(orderPopUpConfirmation).getText().contains("Thank you for your purchase!") );
-        assertTrue( driver.findElement(orderPopUpConfirmation).getText().contains("Id: ") );
+        assertTrue(driver.findElement(orderPopUpConfirmation).getText().contains("Thank you for your purchase!"));
+        assertTrue(driver.findElement(orderPopUpConfirmation).getText().contains("Id: "));
 
-        if(driver.findElement(orderPopUpConfirmation).getText().contains("Amount: 0 USD")){
-            assertTrue( driver.findElement(orderPopUpConfirmation).getText().contains("Amount: 0 USD") );
-        }else{
-            assertTrue( driver.findElement(orderPopUpConfirmation).getText().contains(totalPriceRight) );
+        if (driver.findElement(orderPopUpConfirmation).getText().contains("Amount: 0 USD")) {
+            assertTrue(driver.findElement(orderPopUpConfirmation).getText().contains("Amount: 0 USD"));
+        } else {
+            assertTrue(driver.findElement(orderPopUpConfirmation).getText().contains(totalPriceRight));
         }
 
-        assertTrue( driver.findElement(orderPopUpConfirmation).getText().contains(globalNameOrderForm) );
-        assertTrue( driver.findElement(orderPopUpConfirmation).getText().contains(globalCreditCardOrderForm) );
+        assertTrue(driver.findElement(orderPopUpConfirmation).getText().contains(globalNameOrderForm));
+        assertTrue(driver.findElement(orderPopUpConfirmation).getText().contains(globalCreditCardOrderForm));
     }
 
-    public void userClicksOKButtonOnThePopUpConfirmation(){
+    public void userClicksOKButtonOnThePopUpConfirmation() {
         driver.findElement(okButtonPopUpConfirmation).click();
     }
 
-    public void userClicksTheXButtonOnOrderFormPopUpWindow(){
+    public void userClicksTheXButtonOnOrderFormPopUpWindow() {
         driver.findElement(xButton).click();
     }
 
-    public void verifyThatTheOrderFormPopUpWindowIsNotDisplayed(){
-        //assertFalse yg ini failed, can't find element, karena saya tambahkan and @style='display: block; di xpath nya
-        //and @style='display: block; memang muncul jika pop up Order Form nya sedang terdisplay.
-        //kalau diclose, path dari element nya tidak mengandung and @style='display: block;
-        //tapi kalau path nya tidak ditambah and @style='display: block;, walaupun pop up Order Form nya ditutup
-        //element nya akan tetap found
-        assertFalse(driver.findElement(orderFormPopUpWindow).isDisplayed());
-
-        //tetapi kalau yg digunakan sebagai assert adalah nameFieldOrderForm, test nya berhasil
-        //assertFalse(driver.findElement(nameFieldOrderForm).isDisplayed());
-
-
+    public void verifyThatTheOrderFormPopUpWindowIsNotDisplayed() {
+        boolean modal;
+        try {
+            driver.findElement(orderFormPopUpWindow).isDisplayed();
+            // kalau modal ketemu, variable modal = true
+            modal = true;
+        } catch (Exception e) {
+            // kalau modal GAK/TIDAK ketemu, variable modal = false
+            modal = false;
+        }
+        assertFalse(modal);
     }
 
-    public void userClicksTheCloseButtonOnOrderFormPopUpWindow(){
+    public void userClicksTheCloseButtonOnOrderFormPopUpWindow() {
         driver.findElement(closeButton).click();
     }
-
-
-
-
-
-
 
 
 }

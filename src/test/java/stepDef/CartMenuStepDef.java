@@ -49,7 +49,7 @@ public class CartMenuStepDef {
 
     @And("Verify that Order Form Pop-up window will be displayed")
     public void verifyThatOrderFormPopUpWindowWillBeDisplayed() throws InterruptedException{
-        Thread.sleep(10000);
+        Thread.sleep(1000);
         cartMenuPage.verifyThatOrderFormPopUpWindowWillBeDisplayed();
     }
 
@@ -111,7 +111,7 @@ public class CartMenuStepDef {
 
     @Then("Verify that the Order Form Pop-up window is not displayed")
     public void verifyThatTheOrderFormPopUpWindowIsNotDisplayed() throws InterruptedException{
-        Thread.sleep(10000);
+        Thread.sleep(1000);
         cartMenuPage.verifyThatTheOrderFormPopUpWindowIsNotDisplayed();
     }
 
